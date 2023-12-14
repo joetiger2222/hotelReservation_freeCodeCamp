@@ -1,0 +1,95 @@
+{{f.valid|json}}
+
+<div class="alert alert-success" *ngIf="successMessage!==''">
+    {{successMessage}}
+</div>
+
+<form #f="ngForm" (ngSubmit)="addRoom(f)" >
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      type="text"
+      name="roomType"
+      placeholder="Room Type"
+      [(ngModel)]="room.roomType"
+      [ngModelOptions]="{updateOn:'blur'}"
+    />
+  </div>
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      minlength="5"
+      maxlength="20"
+      type="text"
+      name="amenities"
+      placeholder="Amenities"
+      [(ngModel)]="room.amenities"
+      #roomAmenities="ngModel"
+    />
+    <div class="alert alert-danger" *ngIf="roomAmenities.errors?.['minlength']">
+        Amenities Should be min 5 chars
+    </div>
+    <div class="alert alert-danger" *ngIf="roomAmenities.errors?.['required'] && roomAmenities.touched">
+        Amenities is required
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      type="number"
+      name="price"
+      placeholder="Room Price Per Night"
+      [(ngModel)]="room.price"
+    />
+  </div>
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      type="text"
+      name="photos"
+      placeholder="photos (provide link)"
+      [(ngModel)]="room.photos"
+    />
+  </div>
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      type="datetime"
+      name="checkingTime"
+      placeholder="Check-in Time"
+      [(ngModel)]="room.checkinTime"
+    />
+  </div>
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      type="datetime"
+      name="checkoutTime"
+      placeholder="Check-out Time"
+      [(ngModel)]="room.checkoutTime"
+    />
+  </div>
+  <div class="form-group">
+    <input
+    required
+      class="form-control"
+      type="number"
+      name="rating"
+      placeholder="Rating"
+      [(ngModel)]="room.rating"
+      min="1"
+      max="5"
+    />
+  </div>
+  <div>
+    <button [disabled]="!f.valid" class="btn btn-primary" type="submit">
+        Submit
+    </button>
+  </div>
+</form>

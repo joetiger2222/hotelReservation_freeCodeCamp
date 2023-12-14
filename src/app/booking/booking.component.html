@@ -1,0 +1,96 @@
+<p>booking works!</p>
+{{ bookingForm.value | json }}
+{{ bookingForm.pristine | json }}
+{{ bookingForm.dirty | json }}
+
+
+
+<form [formGroup]="bookingForm" class="bookingForm" (ngSubmit)="addBooking()">
+  <input formControlName="roomId" placeholder="Room Id" />
+  <p class="alert alert-danger" *ngIf="bookingForm.get('roomId')?.hasError('required')&&bookingForm.get('roomId')?.touched">Room Id is Required</p>
+  <input formControlName="guestName" placeholder="Guest Name" />
+  <input email formControlName="guiestEmail" placeholder="provide email" />
+  <p>{{bookingForm.get('guiestEmail')?.errors |json}}</p>
+  <input formControlName="mobileNumber" placeholder="Mobile Number" />
+  <input
+    type="number"
+    formControlName="bookingAmound"
+    placeholder="booking amount"
+  />
+
+  <mat-form-field>
+    <mat-label>Check-in Date</mat-label>
+    <input matInput [matDatepicker]="checkinDate" formControlName="checkinDate" />
+    <mat-datepicker-toggle matIconSuffix [for]="checkinDate"></mat-datepicker-toggle>
+    <mat-datepicker #checkinDate></mat-datepicker>
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Check-out Date</mat-label>
+    <input matInput [matDatepicker]="checkoutDate" formControlName="checkoutDate" />
+    <mat-datepicker-toggle matIconSuffix [for]="checkoutDate"></mat-datepicker-toggle>
+    <mat-datepicker #checkoutDate></mat-datepicker>
+  </mat-form-field>
+
+  
+  <mat-form-field>
+    <mat-label>Booking Date</mat-label>
+    <input matInput [matDatepicker]="bookingDate" formControlName="bookingDate" />
+    <mat-datepicker-toggle matIconSuffix [for]="bookingDate"></mat-datepicker-toggle>
+    <mat-datepicker #bookingDate></mat-datepicker>
+  </mat-form-field>
+
+
+  <div formGroupName="address">
+  <input formControlName="guestAddress" placeholder="Address" />
+
+  <input formControlName="guestCity" placeholder="City" />
+
+  <input formControlName="guestState" placeholder="State" />
+
+  <input formControlName="guestCountry" placeholder="Country" />
+
+  <input formControlName="guestZipCode" placeholder="ZIP Code" />
+  </div>
+
+
+
+<div>
+  <button class="btn btn-primary" type="button" (click)="addGuest()">Add Guest</button>
+</div>
+
+<div formArrayName="guests" *ngFor="let guest of guests.controls; let i =index">
+
+<div [formGroupName]="i">
+  <input formControlName="guestName" placeholder="name" />
+  <input formControlName="age" placeholder="age" type="number" />
+</div>
+<div>
+  <button class="btn btn-danger" (click)="deleteGuest(i)">Delete Guest</button>
+</div>
+
+  
+
+</div>
+
+
+
+
+
+
+
+  <div>
+    <button type="submit" class="btn btn-success" [disabled]="bookingForm.invalid">
+      Book Room
+    </button>
+  </div>
+ 
+
+  <!-- <input formControlName="bookingStatus" placeholder="booking status" /> -->
+
+
+  
+  
+  
+</form>
